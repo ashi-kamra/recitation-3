@@ -1,4 +1,4 @@
-import { NotAllowedError } from "./errors";
+import { NotAllowedError, UnauthenticatedError } from "./errors";
 
 export interface UserDoc {
   username: string;
@@ -32,4 +32,11 @@ export default class AuthenticatingConcept {
   }
 
   // TODO: Write "authentication" code that makes sure the username exists
+  //register pushes a username to users. so a user would not have been registered if there is no username
+  // if .find() doesn't find anything it returns undefined.
+  authing(username: string){
+    if (this.users.find((user) => user.username === username) === undefined) {
+      throw new UnauthenticatedError("This username is not registered")
+    }
+  }
 }
